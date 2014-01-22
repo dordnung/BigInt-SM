@@ -48,9 +48,6 @@ sp_nativeinfo_t bigint_natives[] =
 	{"BigInt_ToString",             BigInt_ToString},
 	{"BigInt_GetSign",              BigInt_GetSign},
 	{"BigInt_CompareTo",            BigInt_CompareTo},
-	{"BigInt_GetLength",            BigInt_GetLength},
-	{"BigInt_GetCapacity",          BigInt_GetCapacity},
-	{"BigInt_GetBlock",             BigInt_GetBlock},
 	{"BigInt_Negate",               BigInt_Negate},
 	{"BigInt_Add",                  BigInt_Add},
 	{"BigInt_Subtract",             BigInt_Subtract},
@@ -193,6 +190,7 @@ cell_t BigInt_ToInt(IPluginContext *pContext, const cell_t *params)
 cell_t BigInt_ToString(IPluginContext *pContext, const cell_t *params)
 {
 	Handle_t hndl = static_cast<Handle_t>(params[1]);
+	int base = params[4];
 
 	if (hndl == BAD_HANDLE)
 	{
@@ -206,6 +204,13 @@ cell_t BigInt_ToString(IPluginContext *pContext, const cell_t *params)
 	if ((err = handlesys->ReadHandle(hndl, g_BigIntType, &sec, (void **)&bigint)) != HandleError_None)
 	{
 		return pContext->ThrowNativeError("Invalid Handle %x (error %d)", hndl, err);
+	}
+
+	if (base != 10)
+	{
+		pContext->StringToLocal(params[2], params[3], std::string(BigUnsignedInABase(bigint->getMagnitude(), base)).c_str());
+
+		return 1;
 	}
 
 	pContext->StringToLocal(params[2], params[3], bigIntegerToString(*bigint).c_str());
@@ -269,130 +274,6 @@ cell_t BigInt_CompareTo(IPluginContext *pContext, const cell_t *params)
 
 
 	return (int)bigint->compareTo(*bigint2);
-}
-
-
-
-// Get Length of BigInt
-cell_t BigInt_GetLength(IPluginContext *pContext, const cell_t *params)
-{
-	Handle_t hndl = static_cast<Handle_t>(params[1]);
-
-	if (hndl == BAD_HANDLE)
-	{
-		return pContext->ThrowNativeError("Invalid Handle %i", BAD_HANDLE);
-	}
-
-	HandleError err;
-	HandleSecurity sec(NULL, myself->GetIdentity());
-	BigInteger *bigint;
-
-	if ((err = handlesys->ReadHandle(hndl, g_BigIntType, &sec, (void **)&bigint)) != HandleError_None)
-	{
-		return pContext->ThrowNativeError("Invalid Handle %x (error %d)", hndl, err);
-	}
-
-	return bigint->getLength();
-}
-
-
-
-// Get capacity of a BigInt
-cell_t BigInt_GetCapacity(IPluginContext *pContext, const cell_t *params)
-{
-	Handle_t hndl = static_cast<Handle_t>(params[1]);
-
-	if (hndl == BAD_HANDLE)
-	{
-		return pContext->ThrowNativeError("Invalid Handle %i", BAD_HANDLE);
-	}
-
-	HandleError err;
-	HandleSecurity sec(NULL, myself->GetIdentity());
-	BigInteger *bigint;
-
-	if ((err = handlesys->ReadHandle(hndl, g_BigIntType, &sec, (void **)&bigint)) != HandleError_None)
-	{
-		return pContext->ThrowNativeError("Invalid Handle %x (error %d)", hndl, err);
-	}
-
-	return bigint->getCapacity();
-}
-
-
-
-// Get a block of a bigint
-cell_t BigInt_GetBlock(IPluginContext *pContext, const cell_t *params)
-{
-	Handle_t hndl = static_cast<Handle_t>(params[1]);
-
-	if (hndl == BAD_HANDLE)
-	{
-		return pContext->ThrowNativeError("Invalid Handle %i", BAD_HANDLE);
-	}
-
-	if (params[2] < 0)
-	{
-		return pContext->ThrowNativeError("Invalid Block %i", params[2]);
-	}
-
-	HandleError err;
-	HandleSecurity sec(NULL, myself->GetIdentity());
-	BigInteger *bigint;
-
-	if ((err = handlesys->ReadHandle(hndl, g_BigIntType, &sec, (void **)&bigint)) != HandleError_None)
-	{
-		return pContext->ThrowNativeError("Invalid Handle %x (error %d)", hndl, err);
-	}
-
-	return bigint->getBlock(params[2]);
-}
-
-
-
-// Set a block of a bigint
-cell_t BigInt_SetBlock(IPluginContext *pContext, const cell_t *params)
-{
-	Handle_t hndl = static_cast<Handle_t>(params[1]);
-
-	if (hndl == BAD_HANDLE)
-	{
-		return pContext->ThrowNativeError("Invalid Handle %i", BAD_HANDLE);
-	}
-
-	if (params[2] < 0)
-	{
-		return pContext->ThrowNativeError("Invalid Index %i", params[2]);
-	}
-
-	HandleError err;
-	HandleSecurity sec(NULL, myself->GetIdentity());
-	BigInteger *bigint;
-
-	if ((err = handlesys->ReadHandle(hndl, g_BigIntType, &sec, (void **)&bigint)) != HandleError_None)
-	{
-		return pContext->ThrowNativeError("Invalid Handle %x (error %d)", hndl, err);
-	}
-
-
-	BigUnsigned *unsignedBig = new BigUnsigned(bigint->getMagnitude());
-
-	unsignedBig->setBlock(params[2], params[3]);
-
-
-	Handle_t hndlnew = handlesys->CreateHandle(g_BigIntType, unsignedBig, pContext->GetIdentity(), myself->GetIdentity(), NULL);
-
-	if (!hndlnew)
-	{
-		delete unsignedBig;
-	}
-
-	if (params[4] > 0)
-	{
-		handlesys->FreeHandle(hndl, &sec);
-	}
-
-	return hndlnew;
 }
 
 

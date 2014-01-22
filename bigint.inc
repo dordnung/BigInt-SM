@@ -117,10 +117,11 @@ native BigInt_ToInt(Handle:bigint);
  * @param bigint    BigInt Handle.
  * @param str       String to save bigint in.
  * @param maxlength Maxlength of the string.
+ * @param base      Base to convert to.
  *
  * @noreturn
  */
-native BigInt_ToString(Handle:bigint, String:str[], maxlength);
+native BigInt_ToString(Handle:bigint, String:str[], maxlength, base = 10);
 
 
 
@@ -341,73 +342,6 @@ stock bool:BigInt_IsGreater(Handle:bigint, Handle:bigint2)
 {
 	return BigInt_CompareTo(bigint, bigint2) == BigInt_GREATER;
 }
-
-
-
-
-
-
-
-/*
-
-ACCESS INFORMATION OF A BIGINT
-
-*/
-
-/**
- * Gives the length of a BigInt.
- *
- * @param bigint    BigInt Handle.
- *
- * @return          Length of the BigInt.
- */
-native BigInt_GetLength(Handle:bigint);
-
-
-
-
-
-/**
- * Gives the capacity of a BigInt.
- *
- * @param bigint    BigInt Handle.
- *
- * @return          capacity of the BigInt.
- */
-native BigInt_GetCapacity(Handle:bigint);
-
-
-
-
-
-/**
- * Gives a block of a BigInt.
- *
- * @param bigint    BigInt Handle.
- * @param index     Index to get Block for.
- *
- * @return          block of the BigInt at given index.
- */
-native BigInt_GetBlock(Handle:bigint, index);
-
-
-
-
-
-/**
- * Sets a block of a BigInt.
- *
- * @param bigint    BigInt Handle.
- * @param index     Index of block to set.
- * @param newBlock  New Block to set to.
- * @param autoClose Auto close the old bigint of first parameter.
- *
- * @return          New BigInt with changed Block.
- */
-native Handle:BigInt_SetBlock(Handle:bigint, index, newBlock, bool:autoClose = false);
-
-
-
 
 
 
@@ -861,8 +795,8 @@ public Extension:__ext_bigint =
 		MarkNativeAsOptional("BigInt_GetSign");
 		MarkNativeAsOptional("BigInt_CompareTo");
 		MarkNativeAsOptional("BigInt_GetLength");
-		MarkNativeAsOptional("BigInt_GetCapacity");
 		MarkNativeAsOptional("BigInt_GetBlock");
+		MarkNativeAsOptional("BigInt_SetBlock");
 		MarkNativeAsOptional("BigInt_Negate");
 		MarkNativeAsOptional("BigInt_Add");
 		MarkNativeAsOptional("BigInt_Subtract");
