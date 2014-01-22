@@ -22,6 +22,10 @@ public OnPluginStart()
 	new Handle:s;
 
 
+	// Test Steamid converter
+	convertSteamid("STEAM_0:1:123456789");
+
+
 
 	switch(BigInt_CompareTo(firstNumber, secondNumber))
 	{
@@ -129,4 +133,26 @@ public OnPluginStart()
 
 	CloseHandle(firstNumber);
 	CloseHandle(secondNumber);
+}
+
+
+
+convertSteamid(const String:steam[])
+{
+	new String:steamid[64];
+	decl String:parts[3][16];
+
+	ExplodeString(steam, ":", parts, sizeof(parts), sizeof(parts[]))
+
+	new Handle:bigint = BigInt_ComputeStrs("76561197960265728", parts[1], BigInt_ADD);
+	new Handle:bigint2 = BigInt_ComputeIntStr(2, parts[2], BigInt_MULTIPLY);
+
+	BigInt_Compute(bigint, bigint2, BigInt_ADD, BigInt_OVERRIDE);
+
+	BigInt_ToString(bigint, steamid, sizeof(steamid));
+
+	PrintToServer("Community of Steamid %s is %s", steam, steamid);
+
+	CloseHandle(bigint);
+	CloseHandle(bigint2);
 }
