@@ -536,6 +536,88 @@ stock Handle:BigInt_ComputeString(Handle:bigint, const String:str[], BigInt_Comp
 
 
 
+/**
+ * Computes a BigInt from an integer and a string
+ *
+ * @param int       Integer with 1. operator.
+ * @param str       String with 2. operator.
+ * @param comp      Arithmetic operation to use.
+ * @param method    Method to use here.
+ *
+ * @return          New computed BigInt (BigInt_RETURN_NEW) or same as first parameter (BigInt_Override).
+ */
+stock Handle:BigInt_ComputeIntStr(int, const String:str[], BigInt_Comp:comp)
+{
+	new Handle:bigint = BigInt_Create(int);
+	new Handle:bigint2 = BigInt_CreateFromString(str);
+
+	new Handle:newBigInt = BigInt_Compute(bigint, bigint2, comp, BigInt_RETURN_NEW);
+
+	CloseHandle(bigint);
+	CloseHandle(bigint2);
+
+	return newBigInt;
+}
+
+
+
+
+
+
+/**
+ * Computes a BigInt from two Integers.
+ *
+ * @param int       Integer with 1. operator.
+ * @param int2      Integer with 2. operator.
+ * @param comp      Arithmetic operation to use.
+ * @param method    Method to use here.
+ *
+ * @return          New computed BigInt (BigInt_RETURN_NEW) or same as first parameter (BigInt_Override).
+ */
+stock Handle:BigInt_ComputeInts(int, int2, BigInt_Comp:comp)
+{
+	new Handle:bigint = BigInt_Create(int);
+	new Handle:bigint2 = BigInt_Create(int2);
+
+	new Handle:newBigInt = BigInt_Compute(bigint, bigint2, comp, BigInt_RETURN_NEW);
+
+	CloseHandle(bigint);
+	CloseHandle(bigint2);
+
+	return newBigInt;
+}
+
+
+
+
+
+/**
+ * Computes a BigInt from two strings.
+ *
+ * @param str       String with 1. operator.
+ * @param str2      String with 2. operator.
+ * @param comp      Arithmetic operation to use.
+ * @param method    Method to use here.
+ *
+ * @return          New computed BigInt (BigInt_RETURN_NEW) or same as first parameter (BigInt_Override).
+ */
+stock Handle:BigInt_ComputeStrs(const String:str[], const String:str2[], BigInt_Comp:comp)
+{
+	new Handle:bigint = BigInt_CreateFromString(str);
+	new Handle:bigint2 = BigInt_CreateFromString(str2);
+
+	new Handle:newBigInt = BigInt_Compute(bigint, bigint2, comp, BigInt_RETURN_NEW);
+
+	CloseHandle(bigint);
+	CloseHandle(bigint2);
+
+	return newBigInt;
+}
+
+
+
+
+
 
 
 
