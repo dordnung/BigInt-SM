@@ -655,7 +655,7 @@ native Handle:BigInt_Add(Handle:summand1, Handle:summand2, BigInt_Method:method 
 stock Handle:BigInt_AddInt(Handle:summand1, summand2, BigInt_Method:method = RETURN_NEW)
 {
 	new Handle:bigint = BigInt_Create(summand2);
-	new Handle:newBigInt = BigInt_Add(summand1, bigint);
+	new Handle:newBigInt = BigInt_Add(summand1, bigint, method);
 
 	CloseHandle(bigint);
 
@@ -678,7 +678,7 @@ stock Handle:BigInt_AddInt(Handle:summand1, summand2, BigInt_Method:method = RET
 stock Handle:BigInt_AddString(Handle:summand1, const String:summand2[], BigInt_Method:method = RETURN_NEW)
 {
 	new Handle:bigint = BigInt_CreateFromString(summand2);
-	new Handle:newBigInt = BigInt_Add(summand1, bigint);
+	new Handle:newBigInt = BigInt_Add(summand1, bigint, method);
 
 	CloseHandle(bigint);
 
@@ -716,7 +716,7 @@ native Handle:BigInt_Subtract(Handle:minuend, Handle:subtrahend, BigInt_Method:m
 stock Handle:BigInt_SubtractInt(Handle:minuend, subtrahend, BigInt_Method:method = RETURN_NEW)
 {
 	new Handle:bigint = BigInt_Create(subtrahend);
-	new Handle:newBigInt = BigInt_Subtract(minuend, bigint);
+	new Handle:newBigInt = BigInt_Subtract(minuend, bigint, method);
 
 	CloseHandle(bigint);
 
@@ -739,7 +739,7 @@ stock Handle:BigInt_SubtractInt(Handle:minuend, subtrahend, BigInt_Method:method
 stock Handle:BigInt_SubtractString(Handle:minuend, const String:subtrahend[], BigInt_Method:method = RETURN_NEW)
 {
 	new Handle:bigint = BigInt_CreateFromString(subtrahend);
-	new Handle:newBigInt = BigInt_Subtract(minuend, bigint);
+	new Handle:newBigInt = BigInt_Subtract(minuend, bigint, method);
 
 	CloseHandle(bigint);
 
@@ -777,7 +777,7 @@ native Handle:BigInt_Multiply(Handle:multiplier, Handle:multiplicand, BigInt_Met
 stock Handle:BigInt_MultiplyInt(Handle:multiplier, multiplicand, BigInt_Method:method = RETURN_NEW)
 {
 	new Handle:bigint = BigInt_Create(multiplicand);
-	new Handle:newBigInt = BigInt_Multiply(multiplier, bigint);
+	new Handle:newBigInt = BigInt_Multiply(multiplier, bigint, method);
 
 	CloseHandle(bigint);
 
@@ -800,7 +800,7 @@ stock Handle:BigInt_MultiplyInt(Handle:multiplier, multiplicand, BigInt_Method:m
 stock Handle:BigInt_MultiplyString(Handle:multiplier, const String:multiplicand[], BigInt_Method:method = RETURN_NEW)
 {
 	new Handle:bigint = BigInt_CreateFromString(multiplicand);
-	new Handle:newBigInt = BigInt_Multiply(multiplier, bigint);
+	new Handle:newBigInt = BigInt_Multiply(multiplier, bigint, method);
 
 	CloseHandle(bigint);
 
@@ -838,7 +838,7 @@ native Handle:BigInt_Divide(Handle:dividend, Handle:divisor, BigInt_Method:metho
 stock Handle:BigInt_DivideInt(Handle:dividend, divisor, BigInt_Method:method = RETURN_NEW)
 {
 	new Handle:bigint = BigInt_Create(divisor);
-	new Handle:newBigInt = BigInt_Divide(dividend, bigint);
+	new Handle:newBigInt = BigInt_Divide(dividend, bigint, method);
 
 	CloseHandle(bigint);
 
@@ -861,7 +861,7 @@ stock Handle:BigInt_DivideInt(Handle:dividend, divisor, BigInt_Method:method = R
 stock Handle:BigInt_DivideString(Handle:dividend, const String:divisor[], BigInt_Method:method = RETURN_NEW)
 {
 	new Handle:bigint = BigInt_CreateFromString(divisor);
-	new Handle:newBigInt = BigInt_Divide(dividend, bigint);
+	new Handle:newBigInt = BigInt_Divide(dividend, bigint, method);
 
 	CloseHandle(bigint);
 
@@ -899,7 +899,7 @@ native Handle:BigInt_DivideRemainder(Handle:dividend, Handle:divisor, BigInt_Met
 stock Handle:BigInt_DivideRemainderInt(Handle:dividend, divisor, BigInt_Method:method = RETURN_NEW)
 {
 	new Handle:bigint = BigInt_Create(divisor);
-	new Handle:newBigInt = BigInt_DivideRemainder(dividend, bigint);
+	new Handle:newBigInt = BigInt_DivideRemainder(dividend, bigint, method);
 
 	CloseHandle(bigint);
 
@@ -922,7 +922,7 @@ stock Handle:BigInt_DivideRemainderInt(Handle:dividend, divisor, BigInt_Method:m
 stock Handle:BigInt_DivideRemainderString(Handle:dividend, const String:divisor[], BigInt_Method:method = RETURN_NEW)
 {
 	new Handle:bigint = BigInt_CreateFromString(divisor);
-	new Handle:newBigInt = BigInt_DivideRemainder(dividend, bigint);
+	new Handle:newBigInt = BigInt_DivideRemainder(dividend, bigint, method);
 
 	CloseHandle(bigint);
 
