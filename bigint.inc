@@ -91,10 +91,11 @@ native Handle:BigInt_Create(int);
  * Creates a new BigInt from a string
  *
  * @param str       String to create BigInteger from.
+ * @param base      Base of the String.
  *
  * @return          BigInt Handle.
  */
-native Handle:BigInt_CreateFromString(const String:str[]);
+native Handle:BigInt_CreateFromString(const String:str[], base = 10);
 
 
 
