@@ -243,7 +243,7 @@ cell_t BigInt_GetSign(IPluginContext *pContext, const cell_t *params)
 cell_t BigInt_CompareTo(IPluginContext *pContext, const cell_t *params)
 {
 	Handle_t hndl = static_cast<Handle_t>(params[1]);
-	Handle_t hndl2 = static_cast<Handle_t>(params[1]);
+	Handle_t hndl2 = static_cast<Handle_t>(params[2]);
 
 	if (hndl == BAD_HANDLE || hndl2 == BAD_HANDLE)
 	{
