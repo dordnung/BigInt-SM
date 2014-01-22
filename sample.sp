@@ -2,8 +2,8 @@
 #include <bigint>
 
 
-#define FirstNumber      "8885213245812354894512415721448"
-#define SecondNumber     "-992115489722222244688872321"
+#define FirstNumber      "10"
+#define SecondNumber     "-8"
 
 
 
@@ -25,15 +25,15 @@ public OnPluginStart()
 
 	switch(BigInt_CompareTo(firstNumber, secondNumber))
 	{
-		case LESS:
+		case BigInt_LESSER:
 		{
 			PrintToServer("%s is lesser than %s", FirstNumber, SecondNumber);
 		}
-		case EQUAL:
+		case BigInt_EQUAL:
 		{
 			PrintToServer("%s is equal with %s", FirstNumber, SecondNumber);
 		}
-		case GREATER:
+		case BigInt_GREATER:
 		{
 			PrintToServer("%s is greater than %s", FirstNumber, SecondNumber);
 		}
@@ -46,15 +46,15 @@ public OnPluginStart()
 
 	switch(BigInt_GetSign(firstNumber))
 	{
-		case NEGATIVE:
+		case BigInt_NEGATIVE:
 		{
 			PrintToServer("%s is negative", FirstNumber);
 		}
-		case ZERO:
+		case BigInt_ZERO:
 		{
 			PrintToServer("%s is zero", FirstNumber);
 		}
-		case POSITIVE:
+		case BigInt_POSITIVE:
 		{
 			PrintToServer("%s is positive", FirstNumber);
 		}
@@ -67,15 +67,15 @@ public OnPluginStart()
 
 	switch(BigInt_GetSign(secondNumber))
 	{
-		case NEGATIVE:
+		case BigInt_NEGATIVE:
 		{
 			PrintToServer("%s is negative", SecondNumber);
 		}
-		case ZERO:
+		case BigInt_ZERO:
 		{
 			PrintToServer("%s is zero", SecondNumber);
 		}
-		case POSITIVE:
+		case BigInt_POSITIVE:
 		{
 			PrintToServer("%s is positive", SecondNumber);
 		}
@@ -94,29 +94,29 @@ public OnPluginStart()
 	PrintToServer("%s*%s + %s*%s == %s", resultString4, FirstNumber, resultString5, SecondNumber, resultString3);
 
 
-	result = BigInt_Add(firstNumber, secondNumber);
+	result = BigInt_Compute(firstNumber, secondNumber, BigInt_ADD);
 	BigInt_ToString(result, resultString, sizeof(resultString));
 
 	PrintToServer("%s + %s is %s", FirstNumber, SecondNumber, resultString);
 	CloseHandle(result);
 
 
-	result = BigInt_Subtract(firstNumber, secondNumber);
+	result = BigInt_Compute(firstNumber, secondNumber, BigInt_SUBTRACT);
 	BigInt_ToString(result, resultString, sizeof(resultString));
 
 	PrintToServer("%s - %s is %s", FirstNumber, SecondNumber, resultString);
 	CloseHandle(result);
 
 
-	result = BigInt_Multiply(firstNumber, secondNumber);
+	result = BigInt_Compute(firstNumber, secondNumber, BigInt_MULTIPLY);
 	BigInt_ToString(result, resultString, sizeof(resultString));
 
 	PrintToServer("%s * %s is %s", FirstNumber, SecondNumber, resultString);
 	CloseHandle(result);
 
 
-	result = BigInt_Divide(firstNumber, secondNumber);
-	BigInt_DivideRemainder(firstNumber, secondNumber, SET_DIRECT);
+	result = BigInt_Compute(firstNumber, secondNumber, BigInt_DIVIDE);
+	BigInt_Compute(firstNumber, secondNumber, BigInt_DIVIDE_REMAINDER, BigInt_OVERRIDE);
 
 	BigInt_ToString(result, resultString, sizeof(resultString));
 	BigInt_ToString(firstNumber, resultString2, sizeof(resultString2));

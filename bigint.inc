@@ -8,12 +8,33 @@
 
 
 
+/* Enumeration for a operation of a BigInteger. */
+enum BigInt_Comp
+{
+	BigInt_ADD = 0, 
+	BigInt_SUBTRACT, 
+	BigInt_MULTIPLY,
+	BigInt_DIVIDE,
+	BigInt_DIVIDE_REMAINDER
+};
+
+
+/* Enumeration for a bit operation of a BigInteger. */
+enum BigInt_CompBit
+{
+	BigInt_AND = 0, 
+	BigInt_OR, 
+	BigInt_XOR
+};
+
+
+
 /* Enumeration for the sign of a BigInteger. */
 enum BigInt_Sign
 {
-	NEGATIVE = -1, 
-	ZERO = 0, 
-	POSITIVE = 1
+	BigInt_NEGATIVE = -1, 
+	BigInt_ZERO = 0, 
+	BigInt_POSITIVE = 1
 };
 
 
@@ -21,27 +42,36 @@ enum BigInt_Sign
 /* Enumeration for the result of a comparison. */
 enum BigInt_CmpRes 
 {
-	LESS = -1, 
-	EQUAL = 0, 
-	GREATER = 1 
+	BigInt_LESSER = -1, 
+	BigInt_EQUAL = 0, 
+	BigInt_GREATER = 1 
 };
 
 
 /**
  * Method to use for some Methods 
- * RETURN_NEW will return a new BigInt Handle and will not change the original one.
- * SET_DIRECT will override the given BigInt Handle and will return the same.
+ * BigInt_RETURN_NEW will return a new BigInt Handle and will not change the original one.
+ * BigInt_Override will override the given BigInt Handle and will return the same.
  * 
  */
 enum BigInt_Method
 {
-	RETURN_NEW = 0, 
-	SET_DIRECT = 1
+	BigInt_RETURN_NEW = 0, 
+	BigInt_OVERRIDE = 1
 };
 
 
 
 
+
+
+
+
+/*
+
+CREATION AND CONVERTING OF A BIGINT
+
+*/
 
 
 
@@ -95,6 +125,19 @@ native BigInt_ToString(Handle:bigint, String:str[], maxlength);
 
 
 
+
+
+
+
+
+/*
+
+SIGN OF A BIGINT
+
+*/
+
+
+
 /**
  * Get the sign of a BigInt
  *
@@ -116,7 +159,7 @@ native BigInt_Sign:BigInt_GetSign(Handle:bigint);
  */
 stock bool:BigInt_IsNegative(Handle:bigint)
 {
-	return BigInt_GetSign(bigint) == NEGATIVE;
+	return BigInt_GetSign(bigint) == BigInt_NEGATIVE;
 }
 
 
@@ -131,7 +174,7 @@ stock bool:BigInt_IsNegative(Handle:bigint)
  */
 stock bool:BigInt_IsZero(Handle:bigint)
 {
-	return BigInt_GetSign(bigint) == ZERO;
+	return BigInt_GetSign(bigint) == BigInt_ZERO;
 }
 
 
@@ -146,10 +189,22 @@ stock bool:BigInt_IsZero(Handle:bigint)
  */
 stock bool:BigInt_IsPositive(Handle:bigint)
 {
-	return BigInt_GetSign(bigint) == POSITIVE;
+	return BigInt_GetSign(bigint) == BigInt_POSITIVE;
 }
 
 
+
+
+
+
+
+
+
+/*
+
+COMPARING OF BIGINTS
+
+*/
 
 
 /**
@@ -217,49 +272,7 @@ stock BigInt_CmpRes:BigInt_CompareToString(Handle:bigint, const String:str[])
  */
 stock bool:BigInt_IsLess(Handle:bigint, Handle:bigint2)
 {
-	return BigInt_CompareTo(bigint, bigint2) == LESS;
-}
-
-
-
-
-/**
- * Checks whether the BigInt is lesser than a int value.
- *
- * @param bigint    BigInt Handle.
- * @param int       Integer to compare with.
- *
- * @return          True if lesser, otherwise false.
- */
-stock bool:BigInt_IsLessInt(Handle:bigint, int)
-{
-	new Handle:bigint2 = BigInt_Create(int);
-	new bool:cmp = BigInt_CompareTo(bigint, bigint2) == LESS;
-
-	CloseHandle(bigint2);
-
-	return cmp;
-}
-
-
-
-
-/**
- * Checks whether the BigInt is lesser than a string value.
- *
- * @param bigint    BigInt Handle.
- * @param str       String to compare with.
- *
- * @return          True if lesser, otherwise false.
- */
-stock bool:BigInt_IsLessString(Handle:bigint, const String:str[])
-{
-	new Handle:bigint2 = BigInt_CreateFromString(str);
-	new bool:cmp = BigInt_CompareTo(bigint, bigint2) == LESS;
-
-	CloseHandle(bigint2);
-
-	return cmp;
+	return BigInt_CompareTo(bigint, bigint2) == BigInt_LESSER;
 }
 
 
@@ -276,109 +289,9 @@ stock bool:BigInt_IsLessString(Handle:bigint, const String:str[])
  */
 stock bool:BigInt_IsLessOrEqual(Handle:bigint, Handle:bigint2)
 {
-	return BigInt_CompareTo(bigint, bigint2) != GREATER;
+	return BigInt_CompareTo(bigint, bigint2) != BigInt_GREATER;
 }
 
-
-
-
-/**
- * Checks whether the BigInt is lesser or equal than a int value.
- *
- * @param bigint    BigInt Handle.
- * @param int       Integer to compare with.
- *
- * @return          True if lesser or equal, otherwise false.
- */
-stock bool:BigInt_IsLessOrEqualInt(Handle:bigint, int)
-{
-	new Handle:bigint2 = BigInt_Create(int);
-	new bool:cmp = BigInt_CompareTo(bigint, bigint2) != GREATER;
-
-	CloseHandle(bigint2);
-
-	return cmp;
-}
-
-
-
-
-/**
- * Checks whether the BigInt is lesser or equal than a string value.
- *
- * @param bigint    BigInt Handle.
- * @param str       String to compare with.
- *
- * @return          True if lesser or equal, otherwise false.
- */
-stock bool:BigInt_IsLessOrEqualString(Handle:bigint, const String:str[])
-{
-	new Handle:bigint2 = BigInt_CreateFromString(str);
-	new bool:cmp = BigInt_CompareTo(bigint, bigint2) != GREATER;
-
-	CloseHandle(bigint2);
-
-	return cmp;
-}
-
-
-
-
-
-/**
- * Checks whether the BigInt is equal to another one.
- *
- * @param bigint    BigInt Handle.
- * @param bigint2   BigInt Handle to compare with.
- *
- * @return          True if equal, otherwise false.
- */
-stock bool:BigInt_IsEqual(Handle:bigint, Handle:bigint2)
-{
-	return BigInt_CompareTo(bigint, bigint2) == EQUAL;
-}
-
-
-
-
-/**
- * Checks whether the BigInt is equal with a int value.
- *
- * @param bigint    BigInt Handle.
- * @param int       Integer to compare with.
- *
- * @return          True if equal, otherwise false.
- */
-stock bool:BigInt_IsEqualInt(Handle:bigint, int)
-{
-	new Handle:bigint2 = BigInt_Create(int);
-	new bool:cmp = BigInt_CompareTo(bigint, bigint2) == EQUAL;
-
-	CloseHandle(bigint2);
-
-	return cmp;
-}
-
-
-
-
-/**
- * Checks whether the BigInt is equal with a string value.
- *
- * @param bigint    BigInt Handle.
- * @param str       String to compare with.
- *
- * @return          True if equal, otherwise false.
- */
-stock bool:BigInt_IsEqualString(Handle:bigint, const String:str[])
-{
-	new Handle:bigint2 = BigInt_CreateFromString(str);
-	new bool:cmp = BigInt_CompareTo(bigint, bigint2) == EQUAL;
-
-	CloseHandle(bigint2);
-
-	return cmp;
-}
 
 
 
@@ -393,50 +306,9 @@ stock bool:BigInt_IsEqualString(Handle:bigint, const String:str[])
  */
 stock bool:BigInt_IsNotEqual(Handle:bigint, Handle:bigint2)
 {
-	return BigInt_CompareTo(bigint, bigint2) != EQUAL;
+	return BigInt_CompareTo(bigint, bigint2) != BigInt_EQUAL;
 }
 
-
-
-
-/**
- * Checks whether the BigInt is not equal with a int value.
- *
- * @param bigint    BigInt Handle.
- * @param int       Integer to compare with.
- *
- * @return          True if not equal, otherwise false.
- */
-stock bool:BigInt_IsNotEqualInt(Handle:bigint, int)
-{
-	new Handle:bigint2 = BigInt_Create(int);
-	new bool:cmp = BigInt_CompareTo(bigint, bigint2) != EQUAL;
-
-	CloseHandle(bigint2);
-
-	return cmp;
-}
-
-
-
-
-/**
- * Checks whether the BigInt is not equal with a string value.
- *
- * @param bigint    BigInt Handle.
- * @param str       String to compare with.
- *
- * @return          True if not equal, otherwise false.
- */
-stock bool:BigInt_IsNotEqualString(Handle:bigint, const String:str[])
-{
-	new Handle:bigint2 = BigInt_CreateFromString(str);
-	new bool:cmp = BigInt_CompareTo(bigint, bigint2) != EQUAL;
-
-	CloseHandle(bigint2);
-
-	return cmp;
-}
 
 
 
@@ -451,49 +323,7 @@ stock bool:BigInt_IsNotEqualString(Handle:bigint, const String:str[])
  */
 stock bool:BigInt_IsGreaterOrEqual(Handle:bigint, Handle:bigint2)
 {
-	return BigInt_CompareTo(bigint, bigint2) != LESS;
-}
-
-
-
-
-/**
- * Checks whether the BigInt is greater or equal than a int value.
- *
- * @param bigint    BigInt Handle.
- * @param int       Integer to compare with.
- *
- * @return          True if greater or equal, otherwise false.
- */
-stock bool:BigInt_IsLessOrEqualInt(Handle:bigint, int)
-{
-	new Handle:bigint2 = BigInt_Create(int);
-	new bool:cmp = BigInt_CompareTo(bigint, bigint2) != LESS;
-
-	CloseHandle(bigint2);
-
-	return cmp;
-}
-
-
-
-
-/**
- * Checks whether the BigInt is greater or equal than a string value.
- *
- * @param bigint    BigInt Handle.
- * @param str       String to compare with.
- *
- * @return          True if greater or equal, otherwise false.
- */
-stock bool:BigInt_IsLessOrEqualString(Handle:bigint, const String:str[])
-{
-	new Handle:bigint2 = BigInt_CreateFromString(str);
-	new bool:cmp = BigInt_CompareTo(bigint, bigint2) != LESS;
-
-	CloseHandle(bigint2);
-
-	return cmp;
+	return BigInt_CompareTo(bigint, bigint2) != BigInt_LESSER;
 }
 
 
@@ -509,54 +339,20 @@ stock bool:BigInt_IsLessOrEqualString(Handle:bigint, const String:str[])
  */
 stock bool:BigInt_IsGreater(Handle:bigint, Handle:bigint2)
 {
-	return BigInt_CompareTo(bigint, bigint2) == GREATER;
+	return BigInt_CompareTo(bigint, bigint2) == BigInt_GREATER;
 }
 
 
 
 
-/**
- * Checks whether the BigInt is greater than a int value.
- *
- * @param bigint    BigInt Handle.
- * @param int       Integer to compare with.
- *
- * @return          True if greater, otherwise false.
- */
-stock bool:BigInt_IsLessInt(Handle:bigint, int)
-{
-	new Handle:bigint2 = BigInt_Create(int);
-	new bool:cmp = BigInt_CompareTo(bigint, bigint2) == GREATER;
-
-	CloseHandle(bigint2);
-
-	return cmp;
-}
 
 
 
+/*
 
-/**
- * Checks whether the BigInt is greater than a string value.
- *
- * @param bigint    BigInt Handle.
- * @param str       String to compare with.
- *
- * @return          True if greater, otherwise false.
- */
-stock bool:BigInt_IsLessString(Handle:bigint, const String:str[])
-{
-	new Handle:bigint2 = BigInt_CreateFromString(str);
-	new bool:cmp = BigInt_CompareTo(bigint, bigint2) == GREATER;
+ACCESS INFORMATION OF A BIGINT
 
-	CloseHandle(bigint2);
-
-	return cmp;
-}
-
-
-
-
+*/
 
 /**
  * Gives the length of a BigInt.
@@ -614,15 +410,26 @@ native Handle:BigInt_SetBlock(Handle:bigint, index, newBlock, bool:autoClose = f
 
 
 
+
+
+
+
+
+/*
+
+COMPUTE WITH A BIGINT
+
+*/
+
 /**
  * Negates a BigInt.
  *
  * @param bigint    BigInt Handle.
  * @param method    Method to use here.
  *
- * @return          New negated BigInt (RETURN_NEW) or same as first parameter (SET_DIRECT).
+ * @return          New negated BigInt (BigInt_RETURN_NEW) or same as first parameter (BigInt_Override).
  */
-native Handle:BigInt_Negate(Handle:bigint, BigInt_Method:method = RETURN_NEW);
+native Handle:BigInt_Negate(Handle:bigint, BigInt_Method:method = BigInt_RETURN_NEW);
 
 
 
@@ -635,55 +442,9 @@ native Handle:BigInt_Negate(Handle:bigint, BigInt_Method:method = RETURN_NEW);
  * @param summand2  BigInt Handle with second Summand.
  * @param method    Method to use here.
  *
- * @return          New added BigInt (RETURN_NEW) or same as first parameter (SET_DIRECT).
+ * @return          New added BigInt (BigInt_RETURN_NEW) or same as first parameter (BigInt_Override).
  */
-native Handle:BigInt_Add(Handle:summand1, Handle:summand2, BigInt_Method:method = RETURN_NEW);
-
-
-
-
-
-/**
- * Adds a BigInt with an integer.
- *
- * @param summand   BigInt Handle with first Summand.
- * @param summand2  Integer with second Summand.
- * @param method    Method to use here.
- *
- * @return          New added BigInt (RETURN_NEW) or same as first parameter (SET_DIRECT).
- */
-stock Handle:BigInt_AddInt(Handle:summand1, summand2, BigInt_Method:method = RETURN_NEW)
-{
-	new Handle:bigint = BigInt_Create(summand2);
-	new Handle:newBigInt = BigInt_Add(summand1, bigint, method);
-
-	CloseHandle(bigint);
-
-	return newBigInt;
-}
-
-
-
-
-
-/**
- * Adds a BigInt with a string.
- *
- * @param summand   BigInt Handle with first Summand.
- * @param summand2  String with second Summand.
- * @param method    Method to use here.
- *
- * @return          New added BigInt (RETURN_NEW) or same as first parameter (SET_DIRECT).
- */
-stock Handle:BigInt_AddString(Handle:summand1, const String:summand2[], BigInt_Method:method = RETURN_NEW)
-{
-	new Handle:bigint = BigInt_CreateFromString(summand2);
-	new Handle:newBigInt = BigInt_Add(summand1, bigint, method);
-
-	CloseHandle(bigint);
-
-	return newBigInt;
-}
+native Handle:BigInt_Add(Handle:summand1, Handle:summand2, BigInt_Method:method = BigInt_RETURN_NEW);
 
 
 
@@ -696,55 +457,9 @@ stock Handle:BigInt_AddString(Handle:summand1, const String:summand2[], BigInt_M
  * @param subtrahend BigInt Handle with subtrahend.
  * @param method     Method to use here.
  *
- * @return           New substracted BigInt (RETURN_NEW) or same as first parameter (SET_DIRECT).
+ * @return           New substracted BigInt (BigInt_RETURN_NEW) or same as first parameter (BigInt_Override).
  */
-native Handle:BigInt_Subtract(Handle:minuend, Handle:subtrahend, BigInt_Method:method = RETURN_NEW);
-
-
-
-
-
-/**
- * Substracts a BigInt with an integer.
- *
- * @param minuend    BigInt Handle with minuend.
- * @param subtrahend Integer with subtrahend.
- * @param method     Method to use here.
- *
- * @return           New substracted BigInt (RETURN_NEW) or same as first parameter (SET_DIRECT).
- */
-stock Handle:BigInt_SubtractInt(Handle:minuend, subtrahend, BigInt_Method:method = RETURN_NEW)
-{
-	new Handle:bigint = BigInt_Create(subtrahend);
-	new Handle:newBigInt = BigInt_Subtract(minuend, bigint, method);
-
-	CloseHandle(bigint);
-
-	return newBigInt;
-}
-
-
-
-
-
-/**
- * Substracts a BigInt with a string.
- *
- * @param minuend    BigInt Handle with minuend.
- * @param subtrahend String with subtrahend.
- * @param method     Method to use here.
- *
- * @return           New substracted BigInt (RETURN_NEW) or same as first parameter (SET_DIRECT).
- */
-stock Handle:BigInt_SubtractString(Handle:minuend, const String:subtrahend[], BigInt_Method:method = RETURN_NEW)
-{
-	new Handle:bigint = BigInt_CreateFromString(subtrahend);
-	new Handle:newBigInt = BigInt_Subtract(minuend, bigint, method);
-
-	CloseHandle(bigint);
-
-	return newBigInt;
-}
+native Handle:BigInt_Subtract(Handle:minuend, Handle:subtrahend, BigInt_Method:method = BigInt_RETURN_NEW);
 
 
 
@@ -757,55 +472,9 @@ stock Handle:BigInt_SubtractString(Handle:minuend, const String:subtrahend[], Bi
  * @param multiplicand BigInt Handle with multiplicand.
  * @param method       Method to use here.
  *
- * @return             New multiplied BigInt (RETURN_NEW) or same as first parameter (SET_DIRECT).
+ * @return             New multiplied BigInt (BigInt_RETURN_NEW) or same as first parameter (BigInt_Override).
  */
-native Handle:BigInt_Multiply(Handle:multiplier, Handle:multiplicand, BigInt_Method:method = RETURN_NEW);
-
-
-
-
-
-/**
- * Multiplys a BigInt with an integer.
- *
- * @param multiplier   BigInt Handle with multiplier.
- * @param multiplicand Integer with multiplicand.
- * @param method       Method to use here.
- *
- * @return             New multiplied BigInt (RETURN_NEW) or same as first parameter (SET_DIRECT).
- */
-stock Handle:BigInt_MultiplyInt(Handle:multiplier, multiplicand, BigInt_Method:method = RETURN_NEW)
-{
-	new Handle:bigint = BigInt_Create(multiplicand);
-	new Handle:newBigInt = BigInt_Multiply(multiplier, bigint, method);
-
-	CloseHandle(bigint);
-
-	return newBigInt;
-}
-
-
-
-
-
-/**
- * Multiplys a BigInt with a string.
- *
- * @param multiplier   BigInt Handle with multiplier.
- * @param multiplicand String with multiplicand.
- * @param method       Method to use here.
- *
- * @return             New multiplied BigInt (RETURN_NEW) or same as first parameter (SET_DIRECT).
- */
-stock Handle:BigInt_MultiplyString(Handle:multiplier, const String:multiplicand[], BigInt_Method:method = RETURN_NEW)
-{
-	new Handle:bigint = BigInt_CreateFromString(multiplicand);
-	new Handle:newBigInt = BigInt_Multiply(multiplier, bigint, method);
-
-	CloseHandle(bigint);
-
-	return newBigInt;
-}
+native Handle:BigInt_Multiply(Handle:multiplier, Handle:multiplicand, BigInt_Method:method = BigInt_RETURN_NEW);
 
 
 
@@ -818,55 +487,9 @@ stock Handle:BigInt_MultiplyString(Handle:multiplier, const String:multiplicand[
  * @param divisor      BigInt Handle with divisor.
  * @param method       Method to use here.
  *
- * @return             New divided BigInt (RETURN_NEW) or same as first parameter (SET_DIRECT).
+ * @return             New divided BigInt (BigInt_RETURN_NEW) or same as first parameter (BigInt_Override).
  */
-native Handle:BigInt_Divide(Handle:dividend, Handle:divisor, BigInt_Method:method = RETURN_NEW);
-
-
-
-
-
-/**
- * Divides a BigInt with an integer.
- *
- * @param dividend     BigInt Handle with dividend.
- * @param divisor      Integer with divisor.
- * @param method       Method to use here.
- *
- * @return             New divided BigInt (RETURN_NEW) or same as first parameter (SET_DIRECT).
- */
-stock Handle:BigInt_DivideInt(Handle:dividend, divisor, BigInt_Method:method = RETURN_NEW)
-{
-	new Handle:bigint = BigInt_Create(divisor);
-	new Handle:newBigInt = BigInt_Divide(dividend, bigint, method);
-
-	CloseHandle(bigint);
-
-	return newBigInt;
-}
-
-
-
-
-
-/**
- * Divides a BigInt with a string.
- *
- * @param dividend     BigInt Handle with dividend.
- * @param divisor      String with divisor.
- * @param method       Method to use here.
- *
- * @return             New divided BigInt (RETURN_NEW) or same as first parameter (SET_DIRECT).
- */
-stock Handle:BigInt_DivideString(Handle:dividend, const String:divisor[], BigInt_Method:method = RETURN_NEW)
-{
-	new Handle:bigint = BigInt_CreateFromString(divisor);
-	new Handle:newBigInt = BigInt_Divide(dividend, bigint, method);
-
-	CloseHandle(bigint);
-
-	return newBigInt;
-}
+native Handle:BigInt_Divide(Handle:dividend, Handle:divisor, BigInt_Method:method = BigInt_RETURN_NEW);
 
 
 
@@ -879,29 +502,73 @@ stock Handle:BigInt_DivideString(Handle:dividend, const String:divisor[], BigInt
  * @param divisor      BigInt Handle with divisor.
  * @param method       Method to use here.
  *
- * @return             New BigInt with remainder of divison (RETURN_NEW) or same as first parameter (SET_DIRECT).
+ * @return             New BigInt with remainder of divison (BigInt_RETURN_NEW) or same as first parameter (BigInt_Override).
  */
-native Handle:BigInt_DivideRemainder(Handle:dividend, Handle:divisor, BigInt_Method:method = RETURN_NEW);
+native Handle:BigInt_DivideRemainder(Handle:dividend, Handle:divisor, BigInt_Method:method = BigInt_RETURN_NEW);
 
 
 
 
 
 /**
- * Divides a BigInt with an integer and returns the remainder.
+ * Computes a BigInt from two BigInts
  *
- * @param dividend     BigInt Handle with dividend.
- * @param divisor      Integer with divisor.
- * @param method       Method to use here.
+ * @param bigint    BigInt Handle with 1. operator.
+ * @param bigint2   BigInt Handle with 2. operator.
+ * @param comp      Arithmetic operation to use.
+ * @param method    Method to use here.
  *
- * @return             New BigInt with remainder of divison (RETURN_NEW) or same as first parameter (SET_DIRECT).
+ * @return          New computed BigInt (BigInt_RETURN_NEW) or same as first parameter (BigInt_Override).
  */
-stock Handle:BigInt_DivideRemainderInt(Handle:dividend, divisor, BigInt_Method:method = RETURN_NEW)
+stock Handle:BigInt_Compute(Handle:bigint, Handle:bigint2, BigInt_Comp:comp, BigInt_Method:method = BigInt_RETURN_NEW)
 {
-	new Handle:bigint = BigInt_Create(divisor);
-	new Handle:newBigInt = BigInt_DivideRemainder(dividend, bigint, method);
+	switch(comp)
+	{
+		case BigInt_ADD:
+		{
+			return BigInt_Add(Handle:bigint, Handle:bigint2, method);
+		}
+		case BigInt_SUBTRACT:
+		{
+			return BigInt_Subtract(Handle:bigint, Handle:bigint2, method);
+		}
+		case BigInt_MULTIPLY:
+		{
+			return BigInt_Multiply(Handle:bigint, Handle:bigint2, method);
+		}
+		case BigInt_DIVIDE:
+		{
+			return BigInt_Divide(Handle:bigint, Handle:bigint2, method);
+		}
+		default:
+		{
+			return BigInt_DivideRemainder(Handle:bigint, Handle:bigint2, method);
+		}
+	}
+	
+	return INVALID_HANDLE;
+}
 
-	CloseHandle(bigint);
+
+
+
+
+/**
+ * Computes a BigInt from a BigInt and an Integer.
+ *
+ * @param bigint    BigInt Handle with 1. operator.
+ * @param int       Integer with 2. operator.
+ * @param comp      Arithmetic operation to use.
+ * @param method    Method to use here.
+ *
+ * @return          New computed BigInt (BigInt_RETURN_NEW) or same as first parameter (BigInt_Override).
+ */
+stock Handle:BigInt_ComputeInt(Handle:bigint, int, BigInt_Comp:comp, BigInt_Method:method = BigInt_RETURN_NEW)
+{
+	new Handle:bigint2 = BigInt_Create(int);
+	new Handle:newBigInt = BigInt_Compute(bigint, bigint2, comp, method);
+
+	CloseHandle(bigint2);
 
 	return newBigInt;
 }
@@ -911,20 +578,21 @@ stock Handle:BigInt_DivideRemainderInt(Handle:dividend, divisor, BigInt_Method:m
 
 
 /**
- * Divides a BigInt with a string and returns the remainder.
+ * Computes a BigInt from a BigInt and a String.
  *
- * @param dividend     BigInt Handle with dividend.
- * @param divisor      String with divisor.
- * @param method       Method to use here.
+ * @param bigint    BigInt Handle with 1. operator.
+ * @param str       String with 2. operator.
+ * @param comp      Arithmetic operation to use.
+ * @param method    Method to use here.
  *
- * @return             New BigInt with remainder of divison (RETURN_NEW) or same as first parameter (SET_DIRECT).
+ * @return          New computed BigInt (BigInt_RETURN_NEW) or same as first parameter (BigInt_Override).
  */
-stock Handle:BigInt_DivideRemainderString(Handle:dividend, const String:divisor[], BigInt_Method:method = RETURN_NEW)
+stock Handle:BigInt_ComputeString(Handle:bigint, const String:str[], BigInt_Comp:comp, BigInt_Method:method = BigInt_RETURN_NEW)
 {
-	new Handle:bigint = BigInt_CreateFromString(divisor);
-	new Handle:newBigInt = BigInt_DivideRemainder(dividend, bigint, method);
+	new Handle:bigint2 = BigInt_CreateFromString(str);
+	new Handle:newBigInt = BigInt_Compute(bigint, bigint2, comp, method);
 
-	CloseHandle(bigint);
+	CloseHandle(bigint2);
 
 	return newBigInt;
 }
@@ -932,6 +600,16 @@ stock Handle:BigInt_DivideRemainderString(Handle:dividend, const String:divisor[
 
 
 
+
+
+
+
+
+/*
+
+USE BIT OPERATIONS ON A BIGINT
+
+*/
 
 /**
  * Performs the logical AND operation on two BigInts.
@@ -946,51 +624,6 @@ native Handle:BigInt_BitAnd(Handle:bits1, Handle:bits2);
 
 
 
-
-/**
- * Performs the logical AND operation on a BigInt and an integer.
- *
- * @param bits1      BigInt Handle with first bits.
- * @param bits2      Integer with second bits.
- *
- * @return           New BigInt with result of the operation.
- */
-stock Handle:BigInt_BitAndInt(Handle:bits1, bits2)
-{
-	new Handle:bigint = BigInt_Create(bits2);
-	new Handle:newBigInt = BigInt_BitAnd(bits1, bigint);
-
-	CloseHandle(bigint);
-
-	return newBigInt;
-}
-
-
-
-
-
-/**
- * Performs the logical AND operation on a BigInt and a string.
- *
- * @param bits1      BigInt Handle with first bits.
- * @param bits2      String with second bits.
- *
- * @return           New BigInt with result of the operation.
- */
-stock Handle:BigInt_BitAndString(Handle:bits1, const String:bits2[])
-{
-	new Handle:bigint = BigInt_CreateFromString(bits2);
-	new Handle:newBigInt = BigInt_BitAnd(bits1, bigint);
-
-	CloseHandle(bigint);
-
-	return newBigInt;
-}
-
-
-
-
-
 /**
  * Performs the logical OR operation on two BigInts.
  *
@@ -1000,51 +633,6 @@ stock Handle:BigInt_BitAndString(Handle:bits1, const String:bits2[])
  * @return           New BigInt with result of the operation.
  */
 native Handle:BigInt_BitOr(Handle:bits1, Handle:bits2);
-
-
-
-
-
-/**
- * Performs the logical OR operation on a BigInt and an integer.
- *
- * @param bits1      BigInt Handle with first bits.
- * @param bits2      Integer with second bits.
- *
- * @return           New BigInt with result of the operation.
- */
-stock Handle:BigInt_BitOrInt(Handle:bits1, bits2)
-{
-	new Handle:bigint = BigInt_Create(bits2);
-	new Handle:newBigInt = BigInt_BitOr(bits1, bigint);
-
-	CloseHandle(bigint);
-
-	return newBigInt;
-}
-
-
-
-
-
-/**
- * Performs the logical AND operation on a BigInt and a string.
- *
- * @param bits1      BigInt Handle with first bits.
- * @param bits2      String with second bits.
- *
- * @return           New BigInt with result of the operation.
- */
-stock Handle:BigInt_BitOrString(Handle:bits1, const String:bits2[])
-{
-	new Handle:bigint = BigInt_CreateFromString(bits2);
-	new Handle:newBigInt = BigInt_BitOr(bits1, bigint);
-
-	CloseHandle(bigint);
-
-	return newBigInt;
-}
-
 
 
 
@@ -1064,19 +652,54 @@ native Handle:BigInt_BitXor(Handle:bits1, Handle:bits2);
 
 
 /**
- * Performs the logical XOR operation on a BigInt and an integer.
+ * Computes a Bit operation from two BigInts
  *
- * @param bits1      BigInt Handle with first bits.
- * @param bits2      Integer with second bits.
+ * @param bigint    BigInt Handle with 1. Bitstring.
+ * @param bigint2   BigInt Handle with 2. Bitstring.
+ * @param compBit   Bit operation to use.
  *
- * @return           New BigInt with result of the operation.
+ * @return          New computed Bit BigInt.
  */
-stock Handle:BigInt_BitXorInt(Handle:bits1, bits2)
+stock Handle:BigInt_ComputeBit(Handle:bigint, Handle:bigint2, BigInt_CompBit:compBit)
 {
-	new Handle:bigint = BigInt_Create(bits2);
-	new Handle:newBigInt = BigInt_BitXor(bits1, bigint);
+	switch(compBit)
+	{
+		case BigInt_AND:
+		{
+			return BigInt_BitAND(Handle:bigint, Handle:bigint2);
+		}
+		case BigInt_OR:
+		{
+			return BigInt_BitOR(Handle:bigint, Handle:bigint2);
+		}
+		default:
+		{
+			return BigInt_BitXOR(Handle:bigint, Handle:bigint2);
+		}
+	}
+	
+	return INVALID_HANDLE;
+}
 
-	CloseHandle(bigint);
+
+
+
+
+/**
+ * Computes a Bit operation from a BigInt and an Integer
+ *
+ * @param bigint    BigInt Handle with 1. Bitstring.
+ * @param int       Integer with 2. Bitstring.
+ * @param compBit   Bit operation to use.
+ *
+ * @return          New computed Bit BigInt.
+ */
+stock Handle:BigInt_ComputeBitInt(Handle:bigint, int, BigInt_CompBit:compBit)
+{
+	new Handle:bigint2 = BigInt_Create(int);
+	new Handle:newBigInt = BigInt_ComputeBit(bigint, bigint2, compBit);
+
+	CloseHandle(bigint2);
 
 	return newBigInt;
 }
@@ -1086,19 +709,20 @@ stock Handle:BigInt_BitXorInt(Handle:bits1, bits2)
 
 
 /**
- * Performs the logical XOR operation on a BigInt and a string.
+ * Computes a Bit operation from a BigInt and an String.
  *
- * @param bits1      BigInt Handle with first bits.
- * @param bits2      String with second bits.
+ * @param bigint    BigInt Handle with 1. Bitstring.
+ * @param str       String with 2. Bitstring.
+ * @param compBit   Bit operation to use.
  *
- * @return           New BigInt with result of the operation.
+ * @return          New computed Bit BigInt.
  */
-stock Handle:BigInt_BitXorString(Handle:bits1, const String:bits2[])
+stock Handle:BigInt_ComputeBitString(Handle:bigint, const String:str[], BigInt_CompBit:compBit)
 {
-	new Handle:bigint = BigInt_CreateFromString(bits2);
-	new Handle:newBigInt = BigInt_BitXor(bits1, bigint);
+	new Handle:bigint2 = BigInt_CreateFromString(str);
+	new Handle:newBigInt = BigInt_ComputeBit(bigint, bigint2, compBit);
 
-	CloseHandle(bigint);
+	CloseHandle(bigint2);
 
 	return newBigInt;
 }
@@ -1134,6 +758,16 @@ native Handle:BigInt_BitShiftRight(Handle:bits, shift);
 
 
 
+
+
+
+
+
+/*
+
+SOME ARITHMETIC FUNCTIONS WITH BIGINTS
+
+*/
 
 /**
  * Returns the greatest common divisor of a and b.
