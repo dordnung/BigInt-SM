@@ -166,6 +166,48 @@ native BigInt_CmpRes:BigInt_CompareTo(Handle:bigint, Handle:bigint2);
 
 
 /**
+ * Compares a BigInt with an integer.
+ *
+ * @param bigint    BigInt Handle.
+ * @param int       Integer to compare with.
+ *
+ * @return          Result of the comparing.
+ */
+stock BigInt_CmpRes:BigInt_CompareToInt(Handle:bigint, int)
+{
+	new Handle:bigint2 = BigInt_Create(int);
+	new BigInt_CmpRes:cmp = BigInt_CompareTo(bigint, bigint2);
+
+	CloseHandle(bigint2);
+
+	return cmp;
+}
+
+
+
+
+/**
+ * Compares a BigInt with a string.
+ *
+ * @param bigint    BigInt Handle.
+ * @param str       String to compare with.
+ *
+ * @return          Result of the comparing.
+ */
+stock BigInt_CmpRes:BigInt_CompareToString(Handle:bigint, const String:str[])
+{
+	new Handle:bigint2 = BigInt_CreateFromString(str);
+	new BigInt_CmpRes:cmp = BigInt_CompareTo(bigint, bigint2);
+
+	CloseHandle(bigint2);
+
+	return cmp;
+}
+
+
+
+
+/**
  * Checks whether the BigInt is lesser than another one.
  *
  * @param bigint    BigInt Handle.
@@ -177,6 +219,49 @@ stock bool:BigInt_IsLess(Handle:bigint, Handle:bigint2)
 {
 	return BigInt_CompareTo(bigint, bigint2) == LESS;
 }
+
+
+
+
+/**
+ * Checks whether the BigInt is lesser than a int value.
+ *
+ * @param bigint    BigInt Handle.
+ * @param int       Integer to compare with.
+ *
+ * @return          True if lesser, otherwise false.
+ */
+stock bool:BigInt_IsLessInt(Handle:bigint, int)
+{
+	new Handle:bigint2 = BigInt_Create(int);
+	new bool:cmp = BigInt_CompareTo(bigint, bigint2) == LESS;
+
+	CloseHandle(bigint2);
+
+	return cmp;
+}
+
+
+
+
+/**
+ * Checks whether the BigInt is lesser than a string value.
+ *
+ * @param bigint    BigInt Handle.
+ * @param str       String to compare with.
+ *
+ * @return          True if lesser, otherwise false.
+ */
+stock bool:BigInt_IsLessString(Handle:bigint, const String:str[])
+{
+	new Handle:bigint2 = BigInt_CreateFromString(str);
+	new bool:cmp = BigInt_CompareTo(bigint, bigint2) == LESS;
+
+	CloseHandle(bigint2);
+
+	return cmp;
+}
+
 
 
 
@@ -198,6 +283,49 @@ stock bool:BigInt_IsLessOrEqual(Handle:bigint, Handle:bigint2)
 
 
 /**
+ * Checks whether the BigInt is lesser or equal than a int value.
+ *
+ * @param bigint    BigInt Handle.
+ * @param int       Integer to compare with.
+ *
+ * @return          True if lesser or equal, otherwise false.
+ */
+stock bool:BigInt_IsLessOrEqualInt(Handle:bigint, int)
+{
+	new Handle:bigint2 = BigInt_Create(int);
+	new bool:cmp = BigInt_CompareTo(bigint, bigint2) != GREATER;
+
+	CloseHandle(bigint2);
+
+	return cmp;
+}
+
+
+
+
+/**
+ * Checks whether the BigInt is lesser or equal than a string value.
+ *
+ * @param bigint    BigInt Handle.
+ * @param str       String to compare with.
+ *
+ * @return          True if lesser or equal, otherwise false.
+ */
+stock bool:BigInt_IsLessOrEqualString(Handle:bigint, const String:str[])
+{
+	new Handle:bigint2 = BigInt_CreateFromString(str);
+	new bool:cmp = BigInt_CompareTo(bigint, bigint2) != GREATER;
+
+	CloseHandle(bigint2);
+
+	return cmp;
+}
+
+
+
+
+
+/**
  * Checks whether the BigInt is equal to another one.
  *
  * @param bigint    BigInt Handle.
@@ -208,6 +336,48 @@ stock bool:BigInt_IsLessOrEqual(Handle:bigint, Handle:bigint2)
 stock bool:BigInt_IsEqual(Handle:bigint, Handle:bigint2)
 {
 	return BigInt_CompareTo(bigint, bigint2) == EQUAL;
+}
+
+
+
+
+/**
+ * Checks whether the BigInt is equal with a int value.
+ *
+ * @param bigint    BigInt Handle.
+ * @param int       Integer to compare with.
+ *
+ * @return          True if equal, otherwise false.
+ */
+stock bool:BigInt_IsEqualInt(Handle:bigint, int)
+{
+	new Handle:bigint2 = BigInt_Create(int);
+	new bool:cmp = BigInt_CompareTo(bigint, bigint2) == EQUAL;
+
+	CloseHandle(bigint2);
+
+	return cmp;
+}
+
+
+
+
+/**
+ * Checks whether the BigInt is equal with a string value.
+ *
+ * @param bigint    BigInt Handle.
+ * @param str       String to compare with.
+ *
+ * @return          True if equal, otherwise false.
+ */
+stock bool:BigInt_IsEqualString(Handle:bigint, const String:str[])
+{
+	new Handle:bigint2 = BigInt_CreateFromString(str);
+	new bool:cmp = BigInt_CompareTo(bigint, bigint2) == EQUAL;
+
+	CloseHandle(bigint2);
+
+	return cmp;
 }
 
 
@@ -230,6 +400,48 @@ stock bool:BigInt_IsNotEqual(Handle:bigint, Handle:bigint2)
 
 
 /**
+ * Checks whether the BigInt is not equal with a int value.
+ *
+ * @param bigint    BigInt Handle.
+ * @param int       Integer to compare with.
+ *
+ * @return          True if not equal, otherwise false.
+ */
+stock bool:BigInt_IsNotEqualInt(Handle:bigint, int)
+{
+	new Handle:bigint2 = BigInt_Create(int);
+	new bool:cmp = BigInt_CompareTo(bigint, bigint2) != EQUAL;
+
+	CloseHandle(bigint2);
+
+	return cmp;
+}
+
+
+
+
+/**
+ * Checks whether the BigInt is not equal with a string value.
+ *
+ * @param bigint    BigInt Handle.
+ * @param str       String to compare with.
+ *
+ * @return          True if not equal, otherwise false.
+ */
+stock bool:BigInt_IsNotEqualString(Handle:bigint, const String:str[])
+{
+	new Handle:bigint2 = BigInt_CreateFromString(str);
+	new bool:cmp = BigInt_CompareTo(bigint, bigint2) != EQUAL;
+
+	CloseHandle(bigint2);
+
+	return cmp;
+}
+
+
+
+
+/**
  * Checks whether the BigInt is greater or equal than another one.
  *
  * @param bigint    BigInt Handle.
@@ -246,6 +458,48 @@ stock bool:BigInt_IsGreaterOrEqual(Handle:bigint, Handle:bigint2)
 
 
 /**
+ * Checks whether the BigInt is greater or equal than a int value.
+ *
+ * @param bigint    BigInt Handle.
+ * @param int       Integer to compare with.
+ *
+ * @return          True if greater or equal, otherwise false.
+ */
+stock bool:BigInt_IsLessOrEqualInt(Handle:bigint, int)
+{
+	new Handle:bigint2 = BigInt_Create(int);
+	new bool:cmp = BigInt_CompareTo(bigint, bigint2) != LESS;
+
+	CloseHandle(bigint2);
+
+	return cmp;
+}
+
+
+
+
+/**
+ * Checks whether the BigInt is greater or equal than a string value.
+ *
+ * @param bigint    BigInt Handle.
+ * @param str       String to compare with.
+ *
+ * @return          True if greater or equal, otherwise false.
+ */
+stock bool:BigInt_IsLessOrEqualString(Handle:bigint, const String:str[])
+{
+	new Handle:bigint2 = BigInt_CreateFromString(str);
+	new bool:cmp = BigInt_CompareTo(bigint, bigint2) != LESS;
+
+	CloseHandle(bigint2);
+
+	return cmp;
+}
+
+
+
+
+/**
  * Checks whether the BigInt is greater than another one.
  *
  * @param bigint    BigInt Handle.
@@ -256,6 +510,48 @@ stock bool:BigInt_IsGreaterOrEqual(Handle:bigint, Handle:bigint2)
 stock bool:BigInt_IsGreater(Handle:bigint, Handle:bigint2)
 {
 	return BigInt_CompareTo(bigint, bigint2) == GREATER;
+}
+
+
+
+
+/**
+ * Checks whether the BigInt is greater than a int value.
+ *
+ * @param bigint    BigInt Handle.
+ * @param int       Integer to compare with.
+ *
+ * @return          True if greater, otherwise false.
+ */
+stock bool:BigInt_IsLessInt(Handle:bigint, int)
+{
+	new Handle:bigint2 = BigInt_Create(int);
+	new bool:cmp = BigInt_CompareTo(bigint, bigint2) == GREATER;
+
+	CloseHandle(bigint2);
+
+	return cmp;
+}
+
+
+
+
+/**
+ * Checks whether the BigInt is greater than a string value.
+ *
+ * @param bigint    BigInt Handle.
+ * @param str       String to compare with.
+ *
+ * @return          True if greater, otherwise false.
+ */
+stock bool:BigInt_IsLessString(Handle:bigint, const String:str[])
+{
+	new Handle:bigint2 = BigInt_CreateFromString(str);
+	new bool:cmp = BigInt_CompareTo(bigint, bigint2) == GREATER;
+
+	CloseHandle(bigint2);
+
+	return cmp;
 }
 
 
