@@ -2,9 +2,8 @@
 #include <bigint>
 
 
-#define FirstNumber      "10"
-#define SecondNumber     "-8"
-
+#define FirstNumber      "1128111111111111"
+#define SecondNumber     "207"
 
 
 public OnPluginStart()
@@ -21,6 +20,7 @@ public OnPluginStart()
 	new Handle:g;
 	new Handle:r;
 	new Handle:s;
+
 
 
 	switch(BigInt_CompareTo(firstNumber, secondNumber))
@@ -84,7 +84,6 @@ public OnPluginStart()
 			PrintToServer("%s is positive", SecondNumber);
 		}
 	}
-
 
 
 	BigInt_Euclidean(firstNumber, secondNumber, g, r, s);
