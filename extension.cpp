@@ -118,7 +118,7 @@ void BigIntExtension::OnHandleDestroy(HandleType_t type, void *object)
 	// Destroy our object here
 	if (type == g_BigIntType)
 	{
-		delete object;
+		delete reinterpret_cast<BigInteger *>(object);
 	}
 }
 
