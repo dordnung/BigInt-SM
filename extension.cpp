@@ -145,9 +145,27 @@ cell_t BigInt_Create(IPluginContext *pContext, const cell_t *params)
 cell_t BigInt_CreateFromString(IPluginContext *pContext, const cell_t *params)
 {
 	char *str;
+	int base = params[2];
 	pContext->LocalToString(params[1], &str);
 
-	BigInteger* bigint = new BigInteger(stringToBigInteger(str));
+	BigInteger* bigint;
+
+	try
+	{
+		if (base != 10)
+		{
+			bigint = new BigInteger(BigUnsignedInABase(str, base));
+		}
+		else
+		{
+			bigint = new BigInteger(stringToBigInteger(str));
+		}
+	}
+	catch (char *error)
+	{
+		return pContext->ThrowNativeError("Couldn't create BigInt (error %s)", error);
+	}
+
 
 	Handle_t hndl = handlesys->CreateHandle(g_BigIntType, bigint, pContext->GetIdentity(), myself->GetIdentity(), NULL);
 

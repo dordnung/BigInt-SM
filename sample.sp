@@ -2,7 +2,7 @@
 #include <bigint>
 
 
-#define FirstNumber      "1128111111111111"
+#define FirstNumber      "40202D60B81C7"
 #define SecondNumber     "207"
 
 
@@ -14,7 +14,7 @@ public OnPluginStart()
 	decl String:resultString4[512];
 	decl String:resultString5[512];
 
-	new Handle:firstNumber = BigInt_CreateFromString(FirstNumber);
+	new Handle:firstNumber = BigInt_CreateFromString(FirstNumber, 16);
 	new Handle:secondNumber = BigInt_CreateFromString(SecondNumber);
 	new Handle:result;
 	new Handle:g;
@@ -84,6 +84,10 @@ public OnPluginStart()
 			PrintToServer("%s is positive", SecondNumber);
 		}
 	}
+
+
+	BigInt_ToString(firstNumber, resultString, sizeof(resultString), 10);
+	PrintToServer("%s in dec is: %s", FirstNumber, resultString);
 
 
 	BigInt_Euclidean(firstNumber, secondNumber, g, r, s);
