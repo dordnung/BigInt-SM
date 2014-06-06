@@ -883,6 +883,7 @@ public Extension:__ext_bigint =
 		MarkNativeAsOptional("BigInt_Negate");
 		MarkNativeAsOptional("BigInt_Add");
 		MarkNativeAsOptional("BigInt_Subtract");
+		MarkNativeAsOptional("BigInt_Multiply");
 		MarkNativeAsOptional("BigInt_Divide");
 		MarkNativeAsOptional("BigInt_DivideRemainder");
 		MarkNativeAsOptional("BigInt_BitAnd");
