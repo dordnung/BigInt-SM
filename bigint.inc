@@ -101,7 +101,7 @@ native Handle:BigInt_CreateFromString(const String:str[], base = 10);
 
 
 /**
- * Converters to primitive integer types
+ * Converts to primitive integer type
  *
  * @param bigint    BigInt Handle.
  *
@@ -113,7 +113,7 @@ native BigInt_ToInt(Handle:bigint);
 
 
 /**
- * Converters to primitive string types
+ * Converts to primitive string type
  *
  * @param bigint    BigInt Handle.
  * @param str       String to save bigint in.
@@ -141,7 +141,7 @@ SIGN OF A BIGINT
 
 
 /**
- * Get the sign of a BigInt
+ * Returns the sign of a BigInt
  *
  * @param bigint    BigInt Handle.
  *
@@ -362,7 +362,7 @@ COMPUTE WITH A BIGINT
  * @param bigint    BigInt Handle.
  * @param method    Method to use here.
  *
- * @return          New negated BigInt (BigInt_RETURN_NEW) or same as first parameter (BigInt_Override).
+ * @return          New negated BigInt (BigInt_RETURN_NEW) or override first parameter (BigInt_Override).
  */
 native Handle:BigInt_Negate(Handle:bigint, BigInt_Method:method = BigInt_RETURN_NEW);
 
@@ -377,7 +377,7 @@ native Handle:BigInt_Negate(Handle:bigint, BigInt_Method:method = BigInt_RETURN_
  * @param summand2  BigInt Handle with second Summand.
  * @param method    Method to use here.
  *
- * @return          New added BigInt (BigInt_RETURN_NEW) or same as first parameter (BigInt_Override).
+ * @return          New added BigInt (BigInt_RETURN_NEW) or override first parameter (BigInt_Override).
  */
 native Handle:BigInt_Add(Handle:summand1, Handle:summand2, BigInt_Method:method = BigInt_RETURN_NEW);
 
@@ -392,7 +392,7 @@ native Handle:BigInt_Add(Handle:summand1, Handle:summand2, BigInt_Method:method 
  * @param subtrahend BigInt Handle with subtrahend.
  * @param method     Method to use here.
  *
- * @return           New substracted BigInt (BigInt_RETURN_NEW) or same as first parameter (BigInt_Override).
+ * @return           New substracted BigInt (BigInt_RETURN_NEW) or override first parameter (BigInt_Override).
  */
 native Handle:BigInt_Subtract(Handle:minuend, Handle:subtrahend, BigInt_Method:method = BigInt_RETURN_NEW);
 
@@ -407,7 +407,7 @@ native Handle:BigInt_Subtract(Handle:minuend, Handle:subtrahend, BigInt_Method:m
  * @param multiplicand BigInt Handle with multiplicand.
  * @param method       Method to use here.
  *
- * @return             New multiplied BigInt (BigInt_RETURN_NEW) or same as first parameter (BigInt_Override).
+ * @return             New multiplied BigInt (BigInt_RETURN_NEW) or override first parameter (BigInt_Override).
  */
 native Handle:BigInt_Multiply(Handle:multiplier, Handle:multiplicand, BigInt_Method:method = BigInt_RETURN_NEW);
 
@@ -422,7 +422,7 @@ native Handle:BigInt_Multiply(Handle:multiplier, Handle:multiplicand, BigInt_Met
  * @param divisor      BigInt Handle with divisor.
  * @param method       Method to use here.
  *
- * @return             New divided BigInt (BigInt_RETURN_NEW) or same as first parameter (BigInt_Override).
+ * @return             New divided BigInt (BigInt_RETURN_NEW) or override first parameter (BigInt_Override).
  */
 native Handle:BigInt_Divide(Handle:dividend, Handle:divisor, BigInt_Method:method = BigInt_RETURN_NEW);
 
@@ -437,7 +437,7 @@ native Handle:BigInt_Divide(Handle:dividend, Handle:divisor, BigInt_Method:metho
  * @param divisor      BigInt Handle with divisor.
  * @param method       Method to use here.
  *
- * @return             New BigInt with remainder of divison (BigInt_RETURN_NEW) or same as first parameter (BigInt_Override).
+ * @return             New BigInt with remainder of divison (BigInt_RETURN_NEW) or override first parameter (BigInt_Override).
  */
 native Handle:BigInt_DivideRemainder(Handle:dividend, Handle:divisor, BigInt_Method:method = BigInt_RETURN_NEW);
 
@@ -453,7 +453,7 @@ native Handle:BigInt_DivideRemainder(Handle:dividend, Handle:divisor, BigInt_Met
  * @param comp      Arithmetic operation to use.
  * @param method    Method to use here.
  *
- * @return          New computed BigInt (BigInt_RETURN_NEW) or same as first parameter (BigInt_Override).
+ * @return          New computed BigInt (BigInt_RETURN_NEW) or override first parameter (BigInt_Override).
  */
 stock Handle:BigInt_Compute(Handle:bigint, Handle:bigint2, BigInt_Comp:comp, BigInt_Method:method = BigInt_RETURN_NEW)
 {
@@ -492,11 +492,11 @@ stock Handle:BigInt_Compute(Handle:bigint, Handle:bigint2, BigInt_Comp:comp, Big
  * Computes a BigInt from a BigInt and an Integer.
  *
  * @param bigint    BigInt Handle with 1. operator.
- * @param int       Integer with 2. operator.
+ * @param int       Integer as 2. operator.
  * @param comp      Arithmetic operation to use.
  * @param method    Method to use here.
  *
- * @return          New computed BigInt (BigInt_RETURN_NEW) or same as first parameter (BigInt_Override).
+ * @return          New computed BigInt (BigInt_RETURN_NEW) or override first parameter (BigInt_Override).
  */
 stock Handle:BigInt_ComputeInt(Handle:bigint, int, BigInt_Comp:comp, BigInt_Method:method = BigInt_RETURN_NEW)
 {
@@ -516,11 +516,11 @@ stock Handle:BigInt_ComputeInt(Handle:bigint, int, BigInt_Comp:comp, BigInt_Meth
  * Computes a BigInt from a BigInt and a String.
  *
  * @param bigint    BigInt Handle with 1. operator.
- * @param str       String with 2. operator.
+ * @param str       String as 2. operator.
  * @param comp      Arithmetic operation to use.
  * @param method    Method to use here.
  *
- * @return          New computed BigInt (BigInt_RETURN_NEW) or same as first parameter (BigInt_Override).
+ * @return          New computed BigInt (BigInt_RETURN_NEW) or override first parameter (BigInt_Override).
  */
 stock Handle:BigInt_ComputeString(Handle:bigint, const String:str[], BigInt_Comp:comp, BigInt_Method:method = BigInt_RETURN_NEW)
 {
@@ -540,11 +540,11 @@ stock Handle:BigInt_ComputeString(Handle:bigint, const String:str[], BigInt_Comp
  * Computes a BigInt from an integer and a string
  *
  * @param int       Integer with 1. operator.
- * @param str       String with 2. operator.
+ * @param str       String as 2. operator.
  * @param comp      Arithmetic operation to use.
  * @param method    Method to use here.
  *
- * @return          New computed BigInt (BigInt_RETURN_NEW) or same as first parameter (BigInt_Override).
+ * @return          New computed BigInt (BigInt_RETURN_NEW) or override first parameter (BigInt_Override).
  */
 stock Handle:BigInt_ComputeIntStr(int, const String:str[], BigInt_Comp:comp)
 {
@@ -567,12 +567,12 @@ stock Handle:BigInt_ComputeIntStr(int, const String:str[], BigInt_Comp:comp)
 /**
  * Computes a BigInt from two Integers.
  *
- * @param int       Integer with 1. operator.
- * @param int2      Integer with 2. operator.
+ * @param int       Integer as 1. operator.
+ * @param int2      Integer as 2. operator.
  * @param comp      Arithmetic operation to use.
  * @param method    Method to use here.
  *
- * @return          New computed BigInt (BigInt_RETURN_NEW) or same as first parameter (BigInt_Override).
+ * @return          New computed BigInt (BigInt_RETURN_NEW) or override first parameter (BigInt_Override).
  */
 stock Handle:BigInt_ComputeInts(int, int2, BigInt_Comp:comp)
 {
@@ -594,12 +594,12 @@ stock Handle:BigInt_ComputeInts(int, int2, BigInt_Comp:comp)
 /**
  * Computes a BigInt from two strings.
  *
- * @param str       String with 1. operator.
- * @param str2      String with 2. operator.
+ * @param str       String as 1. operator.
+ * @param str2      String as 2. operator.
  * @param comp      Arithmetic operation to use.
  * @param method    Method to use here.
  *
- * @return          New computed BigInt (BigInt_RETURN_NEW) or same as first parameter (BigInt_Override).
+ * @return          New computed BigInt (BigInt_RETURN_NEW) or override first parameter (BigInt_Override).
  */
 stock Handle:BigInt_ComputeStrs(const String:str[], const String:str2[], BigInt_Comp:comp)
 {
@@ -706,7 +706,7 @@ stock Handle:BigInt_ComputeBit(Handle:bigint, Handle:bigint2, BigInt_CompBit:com
  * Computes a Bit operation from a BigInt and an Integer
  *
  * @param bigint    BigInt Handle with 1. Bitstring.
- * @param int       Integer with 2. Bitstring.
+ * @param int       Integer as 2. Bitstring.
  * @param compBit   Bit operation to use.
  *
  * @return          New computed Bit BigInt.
@@ -729,7 +729,7 @@ stock Handle:BigInt_ComputeBitInt(Handle:bigint, int, BigInt_CompBit:compBit)
  * Computes a Bit operation from a BigInt and an String.
  *
  * @param bigint    BigInt Handle with 1. Bitstring.
- * @param str       String with 2. Bitstring.
+ * @param str       String as 2. Bitstring.
  * @param compBit   Bit operation to use.
  *
  * @return          New computed Bit BigInt.
@@ -877,9 +877,6 @@ public Extension:__ext_bigint =
 		MarkNativeAsOptional("BigInt_ToString");
 		MarkNativeAsOptional("BigInt_GetSign");
 		MarkNativeAsOptional("BigInt_CompareTo");
-		MarkNativeAsOptional("BigInt_GetLength");
-		MarkNativeAsOptional("BigInt_GetBlock");
-		MarkNativeAsOptional("BigInt_SetBlock");
 		MarkNativeAsOptional("BigInt_Negate");
 		MarkNativeAsOptional("BigInt_Add");
 		MarkNativeAsOptional("BigInt_Subtract");
