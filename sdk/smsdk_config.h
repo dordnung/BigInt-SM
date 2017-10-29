@@ -41,7 +41,7 @@
 #define SMEXT_CONF_NAME			"BigInt SM"
 #define SMEXT_CONF_DESCRIPTION	"Using BigInts in Sourcepawn"
 #define SMEXT_CONF_VERSION		"0.0.1"
-#define SMEXT_CONF_AUTHOR		"Popoklopsi"
+#define SMEXT_CONF_AUTHOR		"dordnung"
 #define SMEXT_CONF_URL			""
 #define SMEXT_CONF_LOGTAG		"BigInt-SM"
 #define SMEXT_CONF_LICENSE		"GPL"
